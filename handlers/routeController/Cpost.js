@@ -9,6 +9,7 @@ async function Cpost(req, res) {
       name,
       result,
       date: new Date().toLocaleDateString("en-GB"),
+      description : null // for now null
     });
 
     console.log("Created:", created);

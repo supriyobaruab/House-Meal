@@ -9,5 +9,8 @@ const conttibutionSchema = new mongoose.Schema({
   date: {
     type: String,
   },
+  description : String,
+  default : null,
+  required : false
 });
 module.exports = mongoose.model("contribution", conttibutionSchema);

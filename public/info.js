@@ -10,7 +10,7 @@ async function information() {
         <td class="px-4 w-48 py-2">${element.date}</td>
         <td class="px-4 w-64 py-2">৳${element.result}</td>
         <td class="px-4 py-2">
-          ${null}
+          ${element.description}
         </td>
       </tr>`;
   });
