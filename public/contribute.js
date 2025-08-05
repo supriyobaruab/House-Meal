@@ -13,6 +13,7 @@ async function get() {
     contribute_info.forEach((psrn) => {
       psrn.innerHTML = `৳${contribution[psrn.id]}`;
     });
+    // console.log("Contribution after fetch:", contribution);
   } catch (err) {
     console.error("Error fetching contribution:", err);
   }
@@ -25,7 +26,7 @@ let contribution = {
   mahmud: 0,
 };
 get();
-//console.log(contribution);
+console.log(contribution);
 contribute_btn.addEventListener("click", () => {
   let user = contribute.value;
   let amount = parseInt(input.value);
@@ -33,17 +34,16 @@ contribute_btn.addEventListener("click", () => {
     return alert("Enter a valid number\nWrite again");
   }
   contribution[user] += amount;
-  //console.log(contribution);
+  console.log(contribution);
   contribute_info.forEach((psrn) => {
     psrn.innerHTML = `৳${contribution[psrn.id]}`;
     input.value = "";
   });
   postContribution(user);
-  location.reload();
 });
 async function postContribution(name) {
-  //console.log(name);
-  //console.log();
+  console.log(name);
+  console.log();
   const option = {
     method: "POST",
     headers: {

@@ -6,5 +6,8 @@ const conttibutionSchema = new mongoose.Schema({
   result: {
     type: Number,
   },
+  date: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("contribution", conttibutionSchema);

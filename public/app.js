@@ -1,121 +1,189 @@
-export const url = "https://new.countbites.tech";
-
 const add_buttons = document.querySelectorAll(".add_button");
 const remove_buttons = document.querySelectorAll(".remove_buttons");
 const submit_buttons = document.querySelectorAll(".submit");
 const mealup = document.querySelectorAll(".mealup");
 const meal = document.querySelectorAll(".meal");
-
-let selectedMeals = {};
+const removed = document.getElementById("resett");
+export const url = "https://countbites.tech";
 
 async function get() {
   try {
     const response = await fetch(`${url}/api`);
     const data = await response.json();
-    const todayDate = new Date().toISOString().split("T")[0];
 
-    data.people.forEach((person) => {
-      const name = person.name;
-      const isToday = person.lastDate === todayDate;
-      const submitted = person.submittedToday && isToday;
+    const todayDate = new Date().toLocaleDateString();
 
-      if (!submitted) {
-        selectedMeals[name] = person.today || 0;
+    data.people.forEach((personData) => {
+      const name = personData.name;
+      if (!people[name]) return;
+
+      people[name].today = personData.today;
+      people[name].total = personData.total;
+      people[name].lastDate = personData.lastDate;
+      people[name].submittedToday = personData.submittedToday;
+
+      if (people[name].lastDate !== todayDate) {
+        people[name].today = 0;
+        people[name].submittedToday = false;
+        people[name].lastDate = todayDate;
       }
 
-      mealup.forEach((el) => {
-        if (el.id === name) {
-          el.innerHTML = `${
-            submitted ? person.today : selectedMeals[name] || 0
-          } meals today`;
+      mealup.forEach((mu) => {
+        if (mu.id === name) {
+          mu.innerHTML = `${people[name].today} meals today`;
         }
       });
 
       meal.forEach((el) => {
         if (el.id === name) {
-          el.innerHTML = person.total;
+          el.innerHTML = people[name].total;
         }
       });
-
-      if (submitted) {
-        disableUserControls(name);
-      }
     });
+
+    // console.log(people);
   } catch (err) {
-    console.error("Failed to fetch data:", err.message);
+    console.log("Error fetching data:", err.message);
   }
 }
 
+let people = {
+  supriyo: { total: 0, today: 0, lastDate: "", submittedToday: false },
+  debongshi: { total: 0, today: 0, lastDate: "", submittedToday: false },
+  waly: { total: 0, today: 0, lastDate: "", submittedToday: false },
+  mahmud: { total: 0, today: 0, lastDate: "", submittedToday: false },
+};
 get();
+const todayDate = new Date().toLocaleDateString();
+
+const names = Object.keys(people);
+for (let i = 0; i < names.length; i++) {
+  const name = names[i];
+  if (people[name].lastDate !== todayDate) {
+    people[name].today = 0;
+    people[name].submittedToday = false;
+    people[name].lastDate = todayDate;
+  }
+}
+
+for (let i = 0; i < meal.length; i++) {
+  const el = meal[i];
+  el.innerHTML = people[el.id].total;
+}
 
 add_buttons.forEach((btn) => {
-  const person = btn.id;
-
   btn.addEventListener("click", () => {
-    if (!selectedMeals[person]) selectedMeals[person] = 0;
-    if (selectedMeals[person] < 2) {
-      selectedMeals[person]++;
-      updateUI(person);
+    const person = btn.id;
+
+    if (people[person].submittedToday) {
+      alert("You already submitted today's meals.");
+      return;
     }
+
+    if (people[person].today < 2) {
+      people[person].today++;
+    }
+
+    if (people[person].today > 2) {
+      people[person].today = 2;
+    }
+
+    mealup.forEach((mu) => {
+      if (mu.id === person) {
+        mu.innerHTML = `${people[person].today} meals today`;
+      }
+    });
   });
 });
 
 remove_buttons.forEach((btn) => {
-  const person = btn.id;
-
   btn.addEventListener("click", () => {
-    if (!selectedMeals[person]) selectedMeals[person] = 0;
-    if (selectedMeals[person] > 0) {
-      selectedMeals[person]--;
-      updateUI(person);
+    const person = btn.id;
+
+    if (people[person].submittedToday) {
+      alert("You already submitted today's meals.");
+      return;
     }
+
+    if (people[person].today > 0) {
+      people[person].today--;
+    }
+
+    if (people[person].today < 0) {
+      people[person].today = 0;
+    }
+
+    mealup.forEach((mu) => {
+      if (mu.id === person) {
+        mu.innerHTML = `${people[person].today} meals today`;
+      }
+    });
   });
 });
 
 submit_buttons.forEach((btn) => {
-  const person = btn.id;
+  btn.addEventListener("click", () => {
+    const person = btn.id;
 
-  btn.addEventListener("click", async () => {
-    const meals = selectedMeals[person] || 0;
-
-    try {
-      const response = await fetch(`${url}/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: person, today: meals }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.error);
-      } else {
-        alert(`${person}'s meals submitted.`);
-        disableUserControls(person);
-        selectedMeals[person] = 0;
-        updateUI(person);
-      }
-    } catch (err) {
-      console.log("Submission failed:", err.message);
+    if (people[person].submittedToday) {
+      alert("You've already submitted today.");
+      return;
     }
-    location.reload();
+
+    people[person].total += people[person].today;
+    people[person].lastDate = todayDate;
+    people[person].submittedToday = true;
+    post(btn.id);
+
+    meal.forEach((el) => {
+      if (el.id === person) {
+        el.innerHTML = people[person].total;
+      }
+    });
+
+    alert(`${person}'s meals submitted.`);
   });
 });
+async function post(person) {
+  const option = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: person, result: people[person] }),
+  };
+  try {
+    const response = await fetch(`${url}/submit`, option);
+    // if (!response.ok) {
+    //   throw new Error("Server failed");
+    // }
+    const data = await response.json();
+    // console.log(data);
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+function remove() {
+  removed.addEventListener("click", async () => {
+    const confirmDelete = confirm(
+      "Attention!\nYou will lose all previous data"
+    );
 
-function updateUI(person) {
-  mealup.forEach((el) => {
-    if (el.id === person) {
-      el.innerHTML = `${selectedMeals[person] || 0} meals today`;
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`${url}/remove`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        alert("All data removed successfully.");
+      } else {
+        alert("Failed to remove data.");
+      }
+    } catch (error) {
+      alert("Error occurred: " + error.message);
     }
   });
 }
-
-function disableUserControls(name) {
-  document
-    .querySelectorAll(`#${name}.add_button`)
-    .forEach((btn) => (btn.disabled = true));
-
-  document
-    .querySelectorAll(`#${name}.remove_buttons`)
-    .forEach((btn) => (btn.disabled = true));
-}
+remove();

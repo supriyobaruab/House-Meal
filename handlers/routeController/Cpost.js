@@ -8,6 +8,7 @@ async function Cpost(req, res) {
     const created = await contribution.create({
       name,
       result,
+      date: new Date().toLocaleDateString("en-GB"),
     });
 
     console.log("Created:", created);

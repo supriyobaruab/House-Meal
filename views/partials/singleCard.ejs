@@ -1,0 +1,59 @@
+<div class="bg-white h-64 w-full rounded-xl">
+  <div class="p-8">
+    <div class="w-full">
+      <div class="flex items-center">
+        <div
+          class="flex bg-[#4F46E5] text-white text-2xl w-[50px] h-[50px] rounded-full justify-center items-center"
+        >
+          <%= initial %>
+        </div>
+        <div class="pl-3">
+          <p class="text-xl font-bold"><%= name %></p>
+          <p class="text-[14px] text-gray-500 mealup" id="<%= id %>">
+            0 meals today
+          </p>
+        </div>
+      </div>
+      <div class="pl-1 w-full">
+        <hr class="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+      </div>
+      <div class="flex justify-between">
+        <div class="flex flex-col items-center">
+          <p class="text-[#4F46E5] font-bold contribute" id="<%= id %>">৳0</p>
+          <p class="text-gray-500 text-[12px]">Contributed</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <p class="text-[#4F46E5] font-bold meal" id="<%= id %>">0</p>
+          <p class="text-gray-500 text-[12px]">Meal Taken</p>
+        </div>
+      </div>
+      <div class="pl-1 w-full">
+        <hr class="h-px w-full my-4 bg-gray-200 border-0 dark:bg-gray-700" />
+      </div>
+      <div class="flex w-full justify-between">
+        <div>
+          <button
+            class="bg-[#4F46E5] hover:bg-white border border-[#4F46E5] w-20 h-9 rounded-[4px] text-white text-[14px] hover:text-black transition duration-500 add_button"
+            id="<%= id %>"
+          >
+            Add
+          </button>
+          <button
+            class="bg-white hover:bg-[#4F46E5] border border-[#4F46E5] w-20 h-9 rounded-[4px] text-[14px] hover:text-white transition duration-500 remove_buttons"
+            id="<%= id %>"
+          >
+            Remove
+          </button>
+        </div>
+        <div>
+          <button
+            class="bg-green-700 hover:bg-white border border-green-700 w-20 h-9 rounded-[4px] text-white text-[14px] hover:text-black transition duration-500 submit"
+            id="<%= id %>"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

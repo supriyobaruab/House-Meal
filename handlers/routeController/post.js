@@ -2,29 +2,23 @@ const mongoose = require("mongoose");
 const people = require("../../schema/peopleSchema");
 
 async function post(req, res) {
-  const { name, today } = req.body;
-  console.log(name, today);
-  const todayDate = new Date().toISOString().split("T")[0];
+  try {
+    const { name, result } = req.body;
 
-  const latest = await people.findOne({ name }).sort({ _id: -1 });
+    const created = await people.create({
+      name,
+      total: result.total,
+      today: result.today,
+      lastDate: result.lastDate,
+      submittedToday: result.submittedToday,
+    });
 
-  if (latest && latest.lastDate === todayDate && latest.submittedToday) {
-    return res.status(400).json({ error: "Already submitted today." });
+    console.log("Created:", created);
+    res.json(created);
+  } catch (error) {
+    console.error("Error saving to DB:", error.message);
+    res.status(500).send(error.message);
   }
-
-  const total = (latest?.total || 0) + today;
-
-  const newEntry = new people({
-    name,
-    total,
-    today,
-    lastDate: todayDate,
-    submittedToday: true,
-  });
-
-  await newEntry.save();
-
-  res.json({ message: "Success", total });
 }
 
 module.exports = post;
