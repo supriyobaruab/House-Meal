@@ -3,6 +3,7 @@ const contribute = document.querySelector("#person");
 const contribute_info = document.querySelectorAll(".contribute");
 const input = document.querySelector("#input");
 const contribute_btn = document.querySelector("#ctbe");
+const description = document.getElementById("description");
 async function get() {
   try {
     const response = await fetch(`${url}/api`);
@@ -34,7 +35,7 @@ contribute_btn.addEventListener("click", () => {
     return alert("Enter a valid number\nWrite again");
   }
   contribution[user] += amount;
-  console.log(contribution);
+  // console.log(contribution);
   contribute_info.forEach((psrn) => {
     psrn.innerHTML = `৳${contribution[psrn.id]}`;
     input.value = "";
@@ -42,14 +43,16 @@ contribute_btn.addEventListener("click", () => {
   postContribution(user);
 });
 async function postContribution(name) {
-  console.log(name);
-  console.log();
   const option = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: name, result: contribution[name] }),
+    body: JSON.stringify({
+      name: name,
+      result: contribution[name],
+      description: description.value,
+    }),
   };
   const response = await fetch(`${url}/contribute`, option);
   const data = await response.json();

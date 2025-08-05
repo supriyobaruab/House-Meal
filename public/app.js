@@ -163,27 +163,27 @@ async function post(person) {
     console.log(err.message);
   }
 }
-function remove() {
-  removed.addEventListener("click", async () => {
-    const confirmDelete = confirm(
-      "Attention!\nYou will lose all previous data"
-    );
+// function remove() {
+//   removed.addEventListener("click", async () => {
+//     const confirmDelete = confirm(
+//       "Attention!\nYou will lose all previous data"
+//     );
 
-    if (!confirmDelete) return;
+//     if (!confirmDelete) return;
 
-    try {
-      const response = await fetch(`${url}/remove`, {
-        method: "DELETE",
-      });
+//     try {
+//       const response = await fetch(`${url}/remove`, {
+//         method: "DELETE",
+//       });
 
-      if (response.ok) {
-        alert("All data removed successfully.");
-      } else {
-        alert("Failed to remove data.");
-      }
-    } catch (error) {
-      alert("Error occurred: " + error.message);
-    }
-  });
-}
-remove();
+//       if (response.ok) {
+//         alert("All data removed successfully.");
+//       } else {
+//         alert("Failed to remove data.");
+//       }
+//     } catch (error) {
+//       alert("Error occurred: " + error.message);
+//     }
+//   });
+// }
+// remove();

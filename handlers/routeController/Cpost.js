@@ -3,16 +3,15 @@ const contribution = require("../../schema/contributionSchema");
 
 async function Cpost(req, res) {
   try {
-    const { name, result } = req.body;
-
+    const { name, result, description } = req.body;
+    console.log(description);
     const created = await contribution.create({
       name,
       result,
       date: new Date().toLocaleDateString("en-GB"),
-      description : null // for now null
+      description: description,
     });
-
-    console.log("Created:", created);
+    console.log(created);
     res.json(created);
   } catch (error) {
     console.error("Error saving to DB:", error.message);
