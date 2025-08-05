@@ -1,9 +1,9 @@
 import { url } from "./app.js";
 const table = document.getElementById("table");
 async function information() {
-  const response = await fetch(`${url}/api`);
+  const response = await fetch(`${url}/logs`);
   const data = await response.json();
-  data.contributions.forEach((element) => {
+  data.data.forEach((element) => {
     table.innerHTML += `
       <tr class="border-b">
         <td class="px-4 w-48 py-2 ">${element.name.toUpperCase()}</td>
