@@ -41,6 +41,7 @@ contribute_btn.addEventListener("click", () => {
     input.value = "";
   });
   postContribution(user);
+  location.reload();
 });
 async function postContribution(name) {
   const option = {
