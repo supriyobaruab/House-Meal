@@ -16,15 +16,24 @@ async function information() {
       </tr>`;
     mobile_log.innerHTML += `
      <div
-      class="flex flex-col justify-evenly p-6 w-74 h-64 border-1 border-gray-200 rounded-xl space-y-1"
-    >
-      <p class=" "><span class="font-bold">Name : </span>${element.name.toUpperCase()}</p>
-      <p class=""><span class="font-bold">Fund : </span>${element.result}</p>
-      <p class=""><span class="font-bold">Date : </span>${element.date}</p>
-      <p class="">
-        <span class="font-bold">Description :</span> ${element.description}
-      </p>
-    </div>`;
+  class="grid grid-cols-2 gap-x-4 gap-y-2 p-8 w-78  border border-gray-200 rounded-xl shadow-md"
+>
+  <div class="font-bold text-gray-500">Name :</div>
+  <div class = "font-bold text-blue-700">${capitalizeFirst(element.name)}</div>
+
+  <div class="font-bold text-gray-500">Fund :</div>
+  <div class="text-green-800 font-bold">${element.result}৳</div>
+
+  <div class="font-bold text-gray-500">Date :</div>
+  <div>${element.date}</div>
+
+  <div class="font-bold text-gray-500">Description :</div>
+  <div class="truncate overflow-y-auto">${element.description}</div>
+</div>`;
   });
 }
 information();
+function capitalizeFirst(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
