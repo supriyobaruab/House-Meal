@@ -28,7 +28,7 @@ async function information() {
   <div>${element.date}</div>
 
   <div class="font-bold text-gray-500">Description :</div>
-  <div class="truncate group-transition-all group-hover:whitespace-normal group-hover:break-words duration-300">${
+  <div class="truncate group-transition-all group-active:whitespace-normal group-active:break-words duration-300">${
     element.description
   }</div>
 </div>`;
