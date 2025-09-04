@@ -16,7 +16,7 @@ async function information() {
       </tr>`;
     mobile_log.innerHTML += `
      <div
-  class="group grid grid-cols-2 gap-x-4 gap-y-2 p-8 w-78 h-54  border border-gray-200 rounded-xl shadow-md transition-all hover:h-64 duration-300 "
+  class="group grid grid-cols-2 gap-x-4 gap-y-2 p-8 w-78 h-54  border border-gray-200 rounded-xl shadow-md transition-all active:h-64 duration-300 "
 >
   <div class="font-bold text-gray-500">Name :</div>
   <div class = "font-bold text-blue-700">${capitalizeFirst(element.name)}</div>
