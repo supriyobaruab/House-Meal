@@ -3,13 +3,14 @@ const contribution = require("../../schema/contributionSchema");
 
 async function Cpost(req, res) {
   try {
-    const { name, result, description } = req.body;
+    const { name, result, description, contribution } = req.body;
     console.log(description);
     const created = await contribution.create({
       name,
       result,
       date: new Date().toLocaleDateString("en-GB"),
       description: description,
+      contribution,
     });
     console.log(created);
     res.json(created);
