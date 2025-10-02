@@ -9,6 +9,9 @@ const conttibutionSchema = new mongoose.Schema({
   date: {
     type: String,
   },
-  description : String,
+  description: String,
+  contribution: {
+    type: Number,
+  },
 });
 module.exports = mongoose.model("contribution", conttibutionSchema);

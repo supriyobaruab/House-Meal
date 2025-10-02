@@ -26,6 +26,12 @@ let contribution = {
   waly: 0,
   mahmud: 0,
 };
+let contribution_without_sum = {
+  supriyo: 0,
+  debongshi: 0,
+  waly: 0,
+  mahmud: 0,
+};
 get();
 console.log(contribution);
 contribute_btn.addEventListener("click", () => {
@@ -35,6 +41,7 @@ contribute_btn.addEventListener("click", () => {
     return alert("Enter a valid number\nWrite again");
   }
   contribution[user] += amount;
+  contribution_without_sum[user] = amount;
   // console.log(contribution);
   contribute_info.forEach((psrn) => {
     psrn.innerHTML = `৳${contribution[psrn.id]}`;
@@ -53,6 +60,7 @@ async function postContribution(name) {
       name: name,
       result: contribution[name],
       description: description.value,
+      contribution: contribution_without_sum[name],
     }),
   };
   const response = await fetch(`${url}/contribute`, option);
