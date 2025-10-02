@@ -60,7 +60,7 @@ async function postContribution(name) {
       name: name,
       result: contribution[name],
       description: description.value,
-      contribution: contribution_without_sum[name],
+      contributions: contribution_without_sum[name],
     }),
   };
   const response = await fetch(`${url}/contribute`, option);
