@@ -1,5 +1,6 @@
 const people = require("../../schema/peopleSchema");
 const contribution = require("../../schema/contributionSchema");
+const entry = require("./date");
 
 async function api(req, res) {
   try {
@@ -14,7 +15,9 @@ async function api(req, res) {
       }
 
       const latestContribution = await contribution
-        .findOne({ name })
+        .findOne({
+          name,
+        })
         .sort({ _id: -1 });
       if (latestContribution) {
         contributionResults.push(latestContribution);

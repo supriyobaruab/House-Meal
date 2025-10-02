@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const entry = require("../handlers/routeController/date");
 
 const personSchema = new mongoose.Schema({
   name: {
@@ -17,6 +18,9 @@ const personSchema = new mongoose.Schema({
   submittedToday: {
     type: Boolean,
     default: false,
+  },
+  entry: {
+    type: String,
   },
 });
 

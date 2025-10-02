@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const contribution = require("../../schema/contributionSchema");
+const entry = require("./date");
 
 async function Cpost(req, res) {
   try {
@@ -11,6 +12,7 @@ async function Cpost(req, res) {
       date: new Date().toLocaleDateString("en-GB"),
       description: description,
       contributions: contributions,
+      entry: entry(),
     });
     console.log(created);
     res.json(created);
