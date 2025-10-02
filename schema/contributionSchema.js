@@ -13,5 +13,8 @@ const conttibutionSchema = new mongoose.Schema({
   contributions: {
     type: Number,
   },
+  entry: {
+    type: String,
+  },
 });
 module.exports = mongoose.model("contribution", conttibutionSchema);

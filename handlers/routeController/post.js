@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const people = require("../../schema/peopleSchema");
+const entry = require("./date");
 
 async function post(req, res) {
   try {
@@ -11,6 +12,7 @@ async function post(req, res) {
       today: result.today,
       lastDate: result.lastDate,
       submittedToday: result.submittedToday,
+      entry: entry(),
     });
 
     console.log("Created:", created);
