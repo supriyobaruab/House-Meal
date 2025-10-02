@@ -10,7 +10,7 @@ const conttibutionSchema = new mongoose.Schema({
     type: String,
   },
   description: String,
-  contribution: {
+  contributions: {
     type: Number,
   },
 });
